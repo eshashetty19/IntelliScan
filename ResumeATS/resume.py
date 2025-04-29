@@ -9,18 +9,6 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 
-
-
-
-import google.generativeai as genai
-genai.configure(api_key="your_api_key")
-models = genai.list_models()
-for m in models:
-    print(m.name, m.supported_generation_methods)
-
-
-
-
 # Configure Gemini API
 if api_key:
     genai.configure(api_key=api_key)
@@ -44,8 +32,6 @@ def get_gemini_response(input_prompt):
         return response.text
     except Exception as e:
         return f"❌ Error: {e}"
-
-
 
 # Home & Deploy Buttons (Aligned in Same Row)
 st.markdown(
@@ -76,8 +62,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-
 # Streamlit UI
 st.title("Smart ATS 🤖")
 st.write("### Improve Your Resume with AI-powered ATS Matching")
@@ -94,14 +78,14 @@ if st.button("🔍 Analyze Resume"):
         with st.spinner("Analyzing..."):
             resume_text = input_pdf_text(uploaded_file)
 
-            # Prompt Template
+            # Updated prompt for front-end developer JD
             input_prompt = f"""
-Hey, act like a skilled and experienced ATS (Applicant Tracking System) with deep knowledge of roles such as software engineer, data scientist, data analyst, and big data engineer.
+Hey, act like a skilled and experienced ATS (Applicant Tracking System) with deep knowledge of roles such as front-end developer, web developer, or UI/UX developer.
 
 Your task is to evaluate the candidate's resume against the provided job description. The job market is very competitive, so provide detailed and helpful feedback.
 
-1. Assign a *match percentage* between resume and JD.
-2. List *missing keywords* from the JD.
+1. Assign a *match percentage* between resume and JD, based on basic front-end skills (HTML, CSS, JavaScript).
+2. List *missing keywords* from the JD based on the specific technologies required for front-end development.
 3. Write a *brief profile summary* based on the resume.
 
 Resume:
@@ -113,31 +97,30 @@ Job Description:
 Respond only in JSON format like:
 {{
   "JD Match": "85%",
-  "MissingKeywords": ["Python", "AWS"],
-  "ProfileSummary": "The candidate has strong experience in backend development using Java and Spring Boot, but lacks cloud exposure."
+  "MissingKeywords": ["JavaScript", "React", "Version Control"],
+  "ProfileSummary": "The candidate has strong experience in front-end development using HTML, CSS, and JavaScript, but lacks experience with modern JavaScript frameworks like React, Angular, or version control tools."
 }}
 """
             gemini_response = get_gemini_response(input_prompt)
 
         # Show result
         st.subheader("📊 ATS Analysis Result")
-        
 
         try:
-    # Clean up potential non-JSON text
-            cleaned_response = gemini_response.strip().split("json")[-1].split("")[0].strip()
-    
-                # Attempt to parse the JSON
+            # Clean up potential non-JSON text
+            cleaned_response = gemini_response.strip().split("json")[-1].split("```")[0].strip()
+
+            # Attempt to parse the JSON
             result = json.loads(cleaned_response)
-                # Extract and display match percentage
+
+            # Extract and display match percentage
             match_str = result.get("JD Match", "0").replace('%', '')
             match_percent = int(match_str)
 
-                # 🔵 Show score as progress bar
+            # 🔵 Show score as progress bar
             st.markdown(f"*✅ JD Match:* {result.get('JD Match', 'N/A')}")
             st.progress(match_percent)
 
-            
             st.markdown("*⚠️ Missing Keywords:*")
             st.write(", ".join(result.get("MissingKeywords", [])))
             st.markdown("*📝 Profile Summary:*")
