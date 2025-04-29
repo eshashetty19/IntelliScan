@@ -6,16 +6,13 @@ import json
 import torch
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from nltk.corpus import stopwords
-
+import os  # <-- Add this import to fix the port binding
 
 app = Flask(__name__)
-
 
 import nltk
 nltk.download("stopwords")
 stop_words = set(stopwords.words("english"))
-
-
 
 # Load GPT-2 model and tokenizer (one-time loading)
 gpt2_model = GPT2LMHeadModel.from_pretrained("gpt2")
@@ -83,8 +80,6 @@ def calculate_ai_percentage(text):
 def load_page():
     return render_template("index.html", query="", plagiarized_texts="[]")
 
-
-
 @app.route("/", methods=["POST"])
 def detect_plagiarism_and_ai_text():
     try:
@@ -148,4 +143,4 @@ def detect_plagiarism_and_ai_text():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
