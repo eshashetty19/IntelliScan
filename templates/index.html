@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plag-Check AI</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    body.dark {
+      background-color: #0a1d37; /* dark bluish */
+      color: #e0e0e0; /* light gray */
+    }
+    .dark input, .dark textarea {
+      background-color: #132c4d; /* dark bluish input fields */
+      color: #e0e0e0;
+      border-color: #3b82f6;
+    }
+    .dark .bg-white {
+      background-color: #132c4d !important; /* dark bluish cards */
+    }
+    .dark canvas {
+      background-color: transparent;
+    }
+  </style>
+</head>
+
+<body class="text-gray-800 p-4 transition-colors duration-300">
+
+  <!-- Dark Mode Toggle Button -->
+  <div class="flex justify-end items-center gap-4 mb-4">
+    <a href="http://127.0.0.1:5500/index.html" class="text-blue-600 font-semibold">Home</a>
+    <button id="toggle-dark-mode" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition">
+      Toggle Mode
+    </button>
+  </div>
+
+  <!-- Lottie Animation -->
+  <div class="absolute top-4 w-105 h-24 z-10" style="padding-left: 8.5rem;">
+    <lottie-player
+      src="https://assets5.lottiefiles.com/packages/lf20_9NxFrGo71i.json"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+    ></lottie-player>
+  </div>
+
+  <!-- Heading -->
+  <h1 class="text-4xl text-center font-bold  dark:text-[#6495ED] my-6 drop-shadow-md">
+    AI & Plagiarism Detector
+  </h1>
+
+  <!-- Form -->
+  <form action="/" method="POST" class="flex flex-col items-center gap-4">
+    <textarea
+      name="query"
+      id="query-text"
+      placeholder="Enter your query here..."
+      class="w-4/5 h-48 p-4 border border-blue-200 rounded-lg shadow resize-y focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+    ></textarea>
+    <input
+      type="submit"
+      value="Submit"
+      class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow transition duration-200"
+    />
+  </form>
+
+  <!-- Charts -->
+  <div class="flex flex-wrap justify-center gap-8 mt-10">
+    <div class="bg-white p-6 rounded-md shadow-lg w-72 border border-blue-100">
+      <canvas id="plagiarism-percentage-chart" width="200" height="200"></canvas>
+    </div>
+    <div class="bg-white p-6 rounded-md shadow-lg w-72 border border-blue-100">
+      <canvas id="ai-percentage-chart" width="200" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="text-center mt-6 text-lg font-semibold text-gray-500">
+    <p><strong>Plagiarism Status:</strong> {{ plagiarism_status }}</p>
+  </div>
+
+  <!-- Result Text -->
+  <div class="text-center mt-10 text-lg font-semibold">
+    {{output}}
+  </div>
+
+  <!-- AI Detection Result -->
+  {% if is_ai_text %}
+    <h2 class="text-center text-xl font-bold text-red-500 mt-4">AI-generated text detected!</h2>
+  {% else %}
+    <h2 class="text-center text-xl font-bold text-green-500 mt-4">Content appears to be human-written</h2>
+  {% endif %}
+
+  <!-- Highlighted Output -->
+  <div class="max-w-4xl mx-auto mt-6 bg-white rounded-lg p-4 shadow border border-blue-100">
+    <p class="leading-relaxed text-base">
+      {% for word in query.split() %}
+        {% if word in plagiarized_texts %}
+          <span class="bg-yellow-200 text-yellow-900 font-semibold px-2 py-1 rounded mr-1">{{ word }}</span>
+        {% else %}
+          {{ word }}
+        {% endif %}
+      {% endfor %}
+    </p>
+  </div>
+
+  <!-- Chart.js Script -->
+  <script>
+    const plagiarismPercentage = {{ percentage }};
+    const aiPercentage = {{ ai_percentage }};
+
+    const plagiarismPercentageChart = new Chart(
+      document.getElementById("plagiarism-percentage-chart").getContext("2d"),
+      {
+        type: "doughnut",
+        data: {
+          labels: ["Plagiarized", "Original"],
+          datasets: [{
+            data: [plagiarismPercentage, 100 - plagiarismPercentage],
+            backgroundColor: ["#60A5FA", "#E0F2FE"],
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          cutout: "70%",
+          plugins: {
+            title: {
+              display: true,
+              text: "Plagiarism Percentage",
+              font: {
+                size: 16
+              }
+            },
+            legend: {
+              labels: {
+                color: "#333",
+              }
+            }
+          }
+        }
+      }
+    );
+
+    const aiPercentageChart = new Chart(
+      document.getElementById("ai-percentage-chart").getContext("2d"),
+      {
+        type: "doughnut",
+        data: {
+          labels: ["AI generated", "Human"],
+          datasets: [{
+            data: [aiPercentage, 100 - aiPercentage],
+            backgroundColor: ["#38BDF8", "#E0F2FE"],
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          cutout: "70%",
+          plugins: {
+            title: {
+              display: true,
+              text: "AI Text Percentage",
+              font: {
+                size: 16
+              }
+            },
+            legend: {
+              labels: {
+                color: "#333"
+              }
+            }
+          }
+        }
+      }
+    );
+  </script>
+
+  <!-- Toggle Dark Mode Script -->
+  <script >
+  document.getElementById("toggle-dark-mode").addEventListener("click", function () {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+
+    const isDarkMode = document.body.classList.contains('dark');
+    const newLabelColor = isDarkMode ? '#FFFFFF' : '#333';
+
+    plagiarismPercentageChart.options.plugins.legend.labels.color = newLabelColor;
+    plagiarismPercentageChart.options.plugins.title.color = newLabelColor;
+    plagiarismPercentageChart.update();
+
+    aiPercentageChart.options.plugins.legend.labels.color = newLabelColor;
+    aiPercentageChart.options.plugins.title.color = newLabelColor;
+    aiPercentageChart.update();
+  });
+  // Apply mode after refresh
+  window.addEventListener('DOMContentLoaded', function () {
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark");
+  
+        const newLabelColor = '#FFFFFF';
+        plagiarismPercentageChart.options.plugins.legend.labels.color = newLabelColor;
+        plagiarismPercentageChart.options.plugins.title.color = newLabelColor;
+        plagiarismPercentageChart.update();
+  
+        aiPercentageChart.options.plugins.legend.labels.color = newLabelColor;
+        aiPercentageChart.options.plugins.title.color = newLabelColor;
+        aiPercentageChart.update();
+      }
+    });
+</script>
+</body>
+</html>

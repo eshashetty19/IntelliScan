@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="mortarboard-fill.svg" />
+    <title>IntelliScan</title>
+  </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+        };</script>
+  
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+  </style>
+
+
+  </head>
+  <body class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200  dark:bg-gradient-to-br dark:from-purple-900 dark:via-violet-950 dark:to-gray-900 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center px-6 py-10">
+      <!-- Header -->
+      <header class="w-full flex justify-between items-center mb-10" style="max-width: 82rem;">
+        <div class="text-2xl font-bold flex items-center space-x-2 ml-4">
+          <i class="bi bi-mortarboard-fill"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-mortarboard-fill text-purple-700 dark:text-white" viewBox="0 0 16 16">
+          <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
+          <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/>
+        </svg>
+          <span class="dark:text-white">IntelliScan</span>
+        </div>
+        <nav class="space-x-6 text-gray-700 text-lg dark:text-gray-300">
+          <a href="#" onclick="window.location.reload(); return false;">Home</a>
+          <a href="#tools-section">About</a>
+
+          <button
+            id="toggleTheme"
+            class="px-3 py-1 border border-gray-500 rounded-lg text-sm dark:border-gray-300 dark:bg-gray-700 dark:text-white">
+            Toggle Mode
+          </button>
+        </nav>
+      </header>
+
+ <!-- Hero -->
+<section class="text-center max-w-3xl mb-12">
+  <!-- Centered SVG Icon -->
+  <div class="flex justify-center mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-mortarboard-fill text-purple-700 dark:text-white" viewBox="0 0 16 16">
+      <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
+      <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/>
+    </svg>
+  </div>
+
+  <!-- Main Title -->
+  <div class="text-5xl font-bold text-gray-700 dark:text-gray-200 mb-4">Welcome to IntelliScan</div>
+  <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+    Empowering content integrity & career success through advanced AI tools.
+  </p>
+
+  <!-- Buttons -->
+  <div class="flex justify-center gap-4 flex-wrap">
+    
+    <a
+      href="http://localhost:8501"
+      class="px-6 py-3 bg-white border-2 dark:bg-gray-800  border-purple-600 text-purple-900 dark:text-gray-300  rounded-xl text-lg   hover:bg-purple-200 dark:hover:bg-violet-600 transition-all shadow-lg"
+    >
+      Scan My Resume
+    </a>
+
+    <a
+      href="http://127.0.0.1:5000"
+      class="px-6 py-3 bg-white border-2 dark:bg-gray-800  border-purple-600 text-purple-900 dark:text-gray-300 rounded-xl text-lg   hover:bg-purple-200 dark:hover:bg-violet-600 transition-all shadow-lg"
+    >
+      Try Text Checker
+    </a>
+  </div>
+</section>
+
+      <!-- Tools -->
+      <section id="tools-section" class="grid md:grid-cols-2 gap-6 max-w-4xl w-full mb-12">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+          <div class="flex items-center space-x-3 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list text-purple-700 " viewBox="0 0 16 16">
+              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+              <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+            </svg>
+            <h3 class="text-xl font-semibold">Resume Scanner</h3>
+          </div>
+          <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 mb-4">
+            <li>Upload your resume for ATS feedback</li>
+            <li>Get a job match percentage & missing keywords</li>
+            <li>Get a profile summary & improvement tips</li>
+
+          </ul>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+            <div class="flex items-center space-x-2  mb-4">
+              <img src="brain.png" alt="AI Detector Icon" class="w-8 h-8 text-purple-700" />
+              <h3 class="text-xl font-semibold">AI Text Detector</h3>
+            </div>
+            <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 mb-4">
+              <li>Detect AI-generated vs human text</li>
+              <li>Plagiarism check</li>
+              <li>Highlighted output</li>
+            </ul>
+          </div>
+      </section>
+
+      <!-- Why IntelliScan -->
+      <section class="text-center max-w-3xl mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6">Why IntelliScan?</h2>
+        <div class="flex flex-wrap justify-center gap-8 text-lg text-gray-700  dark:text-gray-300">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-black-600">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+             <span>Fast & Accurate</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-black-600">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+             <span>Easy to Use</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-black-600">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Free to Try</span>
+          </div>
+        </div>
+      </section>
+
+      <script>
+        const toggleThemeBtn = document.getElementById("toggleTheme");
+        toggleThemeBtn.addEventListener("click", () => {
+          document.documentElement.classList.toggle("dark");
+        });
+      </script>
+
+      <!-- Footer -->
+      <div class="w-full max-w-screen-lg mx-auto">
+
+      <footer class="text-center text-gray-500 dark:text-gray-200 text-xm font-medium space-x-4 py-4 mt-8">
+        © 2025 IntelliScan. Created by Arlene Rhea Karkada and Esha Shetty 
+        <p ><a href="https://github.com/eshashetty19" class="mt-8 text-black dark:text-white hover:text-purple-500 dark:hover:text-purple-300">Github</a>
+      </p>
+      </footer>
+      </div>
+
+      <script>
+        document.querySelector('a[href="#tools-section"]').addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector("#tools-section").scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
