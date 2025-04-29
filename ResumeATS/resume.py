@@ -13,7 +13,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 
 
 import google.generativeai as genai
-genai.configure(api_key="AIzaSyDqrhdkHVQyu_Hn8E3bswdhu-dtw_zZOuA")
+genai.configure(api_key="your_api_key")
 models = genai.list_models()
 for m in models:
     print(m.name, m.supported_generation_methods)
