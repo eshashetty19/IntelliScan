@@ -55,7 +55,7 @@ st.markdown(
     </style>
     <div style='text-align: left;'>
         <div class="home-container">
-            <a href="http://127.0.0.1:5500/index.html" class="home-link">Home</a>
+            <a href="https://home-page-4mkk.onrender.com" class="home-link">Home</a>
         </div>
     </div>
     """,
