@@ -80,12 +80,12 @@ if st.button("🔍 Analyze Resume"):
 
             # Updated prompt for front-end developer JD
             input_prompt = f"""
-Hey, act like a skilled and experienced ATS (Applicant Tracking System) with deep knowledge of roles such as front-end developer, web developer, or UI/UX developer.
+Hey, act like a skilled and experienced ATS (Applicant Tracking System) with deep knowledge of various technical roles.
 
-Your task is to evaluate the candidate's resume against the provided job description. The job market is very competitive, so provide detailed and helpful feedback.
+Your task is to evaluate the candidate's resume against the provided job description.
 
-1. Assign a *match percentage* between resume and JD, based on basic front-end skills (HTML, CSS, JavaScript).
-2. List *missing keywords* from the JD based on the specific technologies required for front-end development.
+1. Assign a *match percentage* between resume and JD, based on the skills, technologies, and responsibilities mentioned in the JD.
+2. List *missing keywords* from the JD that are not covered in the resume.
 3. Write a *brief profile summary* based on the resume.
 
 Resume:
@@ -98,9 +98,10 @@ Respond only in JSON format like:
 {{
   "JD Match": "85%",
   "MissingKeywords": ["JavaScript", "React", "Version Control"],
-  "ProfileSummary": "The candidate has strong experience in front-end development using HTML, CSS, and JavaScript, but lacks experience with modern JavaScript frameworks like React, Angular, or version control tools."
+  "ProfileSummary": "The candidate has strong experience in backend development using Java, Spring Boot, and microservices architecture, but lacks experience with front-end technologies like React or Angular."
 }}
 """
+
             gemini_response = get_gemini_response(input_prompt)
 
         # Show result
