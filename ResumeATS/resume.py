@@ -27,7 +27,7 @@ def input_pdf_text(uploaded_file):
 # Gemini response generation
 def get_gemini_response(input_prompt):
     try:
-        model = genai.GenerativeModel("gemini-1.5-pro-latest")  # ✅ CORRECT
+        model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(input_prompt)
         return response.text
     except Exception as e:
